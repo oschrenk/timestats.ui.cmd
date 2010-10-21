@@ -29,7 +29,7 @@ public class CommandLine {
 	 */
 	public static void main(final String[] args) {
 		Cli<StartupArguments> cli = null;
-		StartupArguments arguments;
+		StartupArguments arguments = null;
 
 		File baseDirectory;
 		char delimiter;
@@ -42,12 +42,12 @@ public class CommandLine {
 			baseDirectory = arguments.getDirectory();
 			if (!baseDirectory.isDirectory()) {
 				System.err
-						.printf("Given path \"%s\" can't be read or isn't a directory.",
+						.printf("Given path \"%s\" can't be read or isn't a directory.\n",
 								baseDirectory);
 				return;
 			} else if (!baseDirectory.canRead()) {
 				System.err
-						.printf("Can't read from the given path \"%s\" due to access restrictions.",
+						.printf("Can't read from the given path \"%s\" due to access restrictions.\n",
 								baseDirectory);
 				return;
 			}
@@ -63,10 +63,12 @@ public class CommandLine {
 			System.err.println(e);
 			return;
 		} catch (IllegalCharsetNameException e) {
-			System.err.printf("Charset \"%s\" not supported.", charset);
+			System.err.printf("Charset \"%s\" not supported.\n",
+					arguments.getCharset());
 			return;
 		} catch (UnsupportedCharsetException e) {
-			System.err.printf("Charset \"%s\" not supported.", charset);
+			System.err.printf("Charset \"%s\" not supported.\n",
+					arguments.getCharset());
 			return;
 		}
 
