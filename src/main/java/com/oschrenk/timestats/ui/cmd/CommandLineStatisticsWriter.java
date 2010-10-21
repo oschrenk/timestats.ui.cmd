@@ -1,7 +1,7 @@
 package com.oschrenk.timestats.ui.cmd;
 
 import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.util.Set;
 
 import org.joda.time.Period;
@@ -18,6 +18,8 @@ import com.oschrenk.timestats.core.Statistics;
  * @author Oliver Schrenk <oliver.schrenk@gmail.com>
  */
 public class CommandLineStatisticsWriter {
+
+	private static final boolean AUTO_FLUSH = true;
 
 	/** The projects. */
 	private final Set<Project> projects;
@@ -46,7 +48,7 @@ public class CommandLineStatisticsWriter {
 	 *            the output stream
 	 */
 	public void write(final OutputStream outputStream) {
-		PrintWriter writer = new PrintWriter(outputStream);
+		PrintStream writer = new PrintStream(outputStream, AUTO_FLUSH);
 
 		for (Project project : projects) {
 			writer.append(project.getTitle());
@@ -54,7 +56,6 @@ public class CommandLineStatisticsWriter {
 					+ periodFormatter.print(getSpentTime(project.getEntries())));
 			writer.append("\n");
 		}
-		writer.flush();
 	}
 
 	/**
